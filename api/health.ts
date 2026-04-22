@@ -1,4 +1,4 @@
-import { getHealthPayload } from "../server/core";
+import { getHealthPayload } from "../server/core.js";
 
 type ApiResponse = {
   json(body: unknown): void;

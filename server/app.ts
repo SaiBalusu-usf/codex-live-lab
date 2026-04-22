@@ -1,10 +1,10 @@
 import express from "express";
 
-import { createBlueprint, createSubmissionKit } from "./ai";
+import { createBlueprint, createSubmissionKit } from "./ai.js";
 import {
   getHealthPayload,
   getRepoPulse,
-} from "./core";
+} from "./core.js";
 
 export const app = express();
 

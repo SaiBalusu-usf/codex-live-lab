@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 
 import express from "express";
 
-import { app } from "./app";
+import { app } from "./app.js";
 
 const port = Number(process.env.PORT ?? 8787);
 

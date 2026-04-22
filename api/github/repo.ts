@@ -1,4 +1,4 @@
-import { getRepoPulse } from "../../server/core";
+import { getRepoPulse } from "../../server/core.js";
 
 type QueryValue = string | string[] | undefined;
 
