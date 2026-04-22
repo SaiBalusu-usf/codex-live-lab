@@ -96,7 +96,7 @@ const timelineSteps = [
 const storyCards = [
   {
     detail:
-      "The presentation’s best advice was to pick one transformation the audience can understand in seconds. The site keeps that as the main rule.",
+      "The presentation's best advice was to pick one transformation the audience can understand in seconds. The site keeps that as the main rule.",
     title: "One clear payoff",
   },
   {
@@ -134,6 +134,8 @@ app.innerHTML = `
   <div class="site-shell">
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
+    <div class="ambient ambient-three" aria-hidden="true"></div>
+
     <header class="topbar panel">
       <div class="brand-lockup">
         <div class="brand-mark" aria-hidden="true"></div>
@@ -155,19 +157,23 @@ app.innerHTML = `
     </header>
 
     <main class="page">
-      <section class="hero section panel">
+      <section class="hero panel">
         <div class="hero-copy">
-          <p class="eyebrow accent">From deck to live product</p>
-          <h2>Turn the presentation into a real, API-powered website judges can understand instantly.</h2>
-          <p class="lede">
-            This live site keeps the presentation’s strongest ideas intact: one visible transformation,
-            one memorable demo path, and proof that the build is real. OpenAI powers the product thinking,
-            GitHub proves the shipping story.
-          </p>
+          <div class="hero-heading">
+            <p class="eyebrow accent">Deck to deployment</p>
+            <h2>Make the challenge entry feel like a live Codex workspace instead of a slide deck on scroll.</h2>
+            <p class="lede">
+              The layout is rebuilt around one glassy app shell, clear panel boundaries, and stable side-by-side
+              workspaces. OpenAI still drives the concept. GitHub still proves the shipping story. The page now stays
+              composed while you move through it.
+            </p>
+          </div>
+
           <div class="hero-actions">
             <a class="button primary" href="#idea-lab">Generate the concept</a>
             <a class="button secondary" href="#repo-pulse">Show repo proof</a>
           </div>
+
           <div class="hero-metrics">
             <article class="metric-card">
               <p class="metric-label">Live stack</p>
@@ -175,9 +181,9 @@ app.innerHTML = `
               <p class="metric-note">Two production APIs wired into one challenge-ready story.</p>
             </article>
             <article class="metric-card">
-              <p class="metric-label">Build shape</p>
-              <p class="metric-value">One-page product</p>
-              <p class="metric-note">Fast to explain, fast to demo, easy to deploy.</p>
+              <p class="metric-label">Layout mode</p>
+              <p class="metric-value">Glassy app shell</p>
+              <p class="metric-note">One stable command bar and three workspace panels that scroll cleanly.</p>
             </article>
             <article class="metric-card">
               <p class="metric-label">Submission angle</p>
@@ -188,16 +194,29 @@ app.innerHTML = `
         </div>
 
         <aside class="hero-side">
-          <section class="timeline-card">
-            <div class="section-chip">Live build loop</div>
+          <section class="hero-console">
+            <div class="hero-console-head">
+              <div>
+                <p class="eyebrow">Challenge cockpit</p>
+                <h3>One visible transformation, one polished loop</h3>
+              </div>
+              <div class="console-lights" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
             <div class="timeline-grid">
               ${timelineSteps
                 .map(
                   (step, index) => `
-                    <article class="timeline-step" style="--step-index:${index + 1}">
+                    <article class="command-item">
                       <span class="timeline-number">0${index + 1}</span>
-                      <h3>${step.label}</h3>
-                      <p>${step.copy}</p>
+                      <div class="command-copy">
+                        <h3>${step.label}</h3>
+                        <p>${step.copy}</p>
+                      </div>
                     </article>
                   `,
                 )
@@ -218,10 +237,15 @@ app.innerHTML = `
       </section>
 
       <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow accent">Presentation principles</p>
-          <h2 class="section-title">The site keeps the workshop logic, but turns it into something people can actually use.</h2>
+        <div class="section-heading section-heading-wide">
+          <p class="eyebrow accent">Glassy system</p>
+          <h2 class="section-title">Every major feature now lives inside its own panel, so the experience reads like one product surface from top to bottom.</h2>
+          <p class="section-copy">
+            The hero explains the value, the workspace panels handle the live interactions, and the checklist closes
+            the loop for the final demo.
+          </p>
         </div>
+
         <div class="story-grid">
           ${storyCards
             .map(
@@ -236,183 +260,232 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section class="section split-layout" id="idea-lab">
-        <div class="section-heading split-heading">
-          <p class="eyebrow accent">Idea lab</p>
-          <h2 class="section-title">Generate the product angle, landing-page story, and demo flow with OpenAI.</h2>
-          <p class="section-copy">
-            Feed it the real user, pain point, and output you want. The response comes back as structured content you
-            can use immediately for the site, demo, and submission.
-          </p>
-        </div>
-
-        <div class="panel workspace">
-          <form class="workspace-form" id="ideaForm">
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Builder identity</span>
-                <input class="input" name="builderName" type="text" value="USF student builder" />
-              </label>
-              <label class="field">
-                <span class="field-label">Target audience</span>
-                <input class="input" name="audience" type="text" value="students balancing classes, work, and side projects" />
-              </label>
+      <section class="studio-stack">
+        <article class="studio-panel panel" id="idea-lab">
+          <div class="studio-head">
+            <div class="section-heading">
+              <p class="eyebrow accent">Idea lab</p>
+              <h2 class="section-title">Generate the product angle, homepage story, and demo flow with OpenAI.</h2>
+              <p class="section-copy">
+                Feed it the real user, pain point, and output you want. The response comes back as structured content
+                you can use immediately for the site, demo, and submission.
+              </p>
             </div>
-
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Pain point</span>
-                <textarea class="textarea" name="painPoint" rows="4">I need a challenge idea that feels real, demos fast, and turns into something portfolio-worthy.</textarea>
-              </label>
-              <label class="field">
-                <span class="field-label">Magic input</span>
-                <textarea class="textarea" name="magicInput" rows="4">A rough creator idea, a student workflow problem, or a messy project concept that needs structure.</textarea>
-              </label>
-            </div>
-
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Desired output</span>
-                <textarea class="textarea" name="desiredOutput" rows="4">A clear product concept, homepage story, demo steps, and challenge-ready positioning.</textarea>
-              </label>
-              <label class="field">
-                <span class="field-label">Brand vibe</span>
-                <textarea class="textarea" name="brandVibe" rows="4">Bold, polished, friendly, and built by someone who actually ships.</textarea>
-              </label>
-            </div>
-
-            <label class="field">
-              <span class="field-label">Unique edge</span>
-              <input class="input" name="edge" type="text" value="Something a judge can understand in 20 seconds and remember later." />
-            </label>
-
-            <div class="form-actions">
-              <button class="button primary" type="submit" id="ideaSubmit">Generate blueprint</button>
-              <p class="inline-note" id="ideaStatus">OpenAI will return structured product content when your API key is configured.</p>
-            </div>
-          </form>
-
-          <div class="result-shell" id="ideaResult">
-            <div class="placeholder-card">
-              <p class="placeholder-kicker">Structured output</p>
-              <h3>Your concept blueprint will appear here.</h3>
-              <p>Use it to decide what the homepage says, what the demo shows first, and how to pitch the project on Handshake.</p>
+            <div class="studio-meta" aria-label="Idea lab capabilities">
+              <span class="mini-pill">OpenAI</span>
+              <span class="mini-pill">Structured output</span>
+              <span class="mini-pill">Landing copy</span>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="section split-layout" id="submission-kit">
-        <div class="section-heading split-heading">
-          <p class="eyebrow accent">Submission kit</p>
-          <h2 class="section-title">Convert the concept into a demo script, resume bullet, and polished submission language.</h2>
-          <p class="section-copy">
-            This is the proof layer from the presentation: the project needs a product story, not just code.
-          </p>
-        </div>
+          <div class="studio-grid">
+            <div class="workspace-surface">
+              <form class="workspace-form" id="ideaForm">
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Builder identity</span>
+                    <input class="input" name="builderName" type="text" value="USF student builder" />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Target audience</span>
+                    <input class="input" name="audience" type="text" value="students balancing classes, work, and side projects" />
+                  </label>
+                </div>
 
-        <div class="panel workspace">
-          <form class="workspace-form" id="kitForm">
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Product name</span>
-                <input class="input" id="kitProductName" name="productName" type="text" value="Codex Live Lab" />
-              </label>
-              <label class="field">
-                <span class="field-label">Audience</span>
-                <input class="input" id="kitAudience" name="audience" type="text" value="students and early creators who need a demoable project story fast" />
-              </label>
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Pain point</span>
+                    <textarea class="textarea" name="painPoint" rows="4">I need a challenge idea that feels real, demos fast, and turns into something portfolio-worthy.</textarea>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Magic input</span>
+                    <textarea class="textarea" name="magicInput" rows="4">A rough creator idea, a student workflow problem, or a messy project concept that needs structure.</textarea>
+                  </label>
+                </div>
+
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Desired output</span>
+                    <textarea class="textarea" name="desiredOutput" rows="4">A clear product concept, homepage story, demo steps, and challenge-ready positioning.</textarea>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Brand vibe</span>
+                    <textarea class="textarea" name="brandVibe" rows="4">Bold, polished, friendly, and built by someone who actually ships.</textarea>
+                  </label>
+                </div>
+
+                <label class="field">
+                  <span class="field-label">Unique edge</span>
+                  <input class="input" name="edge" type="text" value="Something a judge can understand in 20 seconds and remember later." />
+                </label>
+
+                <div class="form-actions">
+                  <button class="button primary" type="submit" id="ideaSubmit">Generate blueprint</button>
+                  <p class="inline-note" id="ideaStatus">OpenAI will return structured product content when your API key is configured.</p>
+                </div>
+              </form>
             </div>
 
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Transformation</span>
-                <textarea class="textarea" id="kitTransformation" name="transformation" rows="4">Turn a rough challenge idea into a product concept, a live demo plan, and a submission-ready narrative.</textarea>
-              </label>
-              <label class="field">
-                <span class="field-label">Standout proof point</span>
-                <textarea class="textarea" id="kitStandoutFeature" name="standoutFeature" rows="4">The site uses OpenAI for ideation and GitHub for live implementation proof in the same experience.</textarea>
-              </label>
-            </div>
-
-            <div class="field-grid two-up">
-              <label class="field">
-                <span class="field-label">Repo URL</span>
-                <input class="input" id="kitRepoUrl" name="repoUrl" placeholder="https://github.com/yourname/your-repo" type="url" />
-              </label>
-              <label class="field">
-                <span class="field-label">Deployment URL</span>
-                <input class="input" name="deploymentUrl" placeholder="https://your-live-site.vercel.app" type="url" />
-              </label>
-            </div>
-
-            <label class="field">
-              <span class="field-label">Proof you want judges to remember</span>
-              <input class="input" name="proofPoint" type="text" value="I shipped a polished live site with real API integrations and a clear student-facing use case." />
-            </label>
-
-            <div class="form-actions">
-              <button class="button primary" type="submit" id="kitSubmit">Generate submission kit</button>
-              <p class="inline-note" id="kitStatus">Use this after the concept feels right or after you have a repo link.</p>
-            </div>
-          </form>
-
-          <div class="result-shell" id="kitResult">
-            <div class="placeholder-card">
-              <p class="placeholder-kicker">Story package</p>
-              <h3>Your pitch, demo beats, and resume bullet will show up here.</h3>
-              <p>Once the idea lab generates a concept, those details will automatically prefill this form.</p>
+            <div class="workspace-surface">
+              <div class="result-shell" id="ideaResult">
+                <div class="placeholder-card">
+                  <p class="placeholder-kicker">Structured output</p>
+                  <h3>Your concept blueprint will appear here.</h3>
+                  <p>Use it to decide what the homepage says, what the demo shows first, and how to pitch the project on Handshake.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </article>
 
-      <section class="section split-layout" id="repo-pulse">
-        <div class="section-heading split-heading">
-          <p class="eyebrow accent">Repo pulse</p>
-          <h2 class="section-title">Pull live GitHub signals so the project story includes real shipping evidence.</h2>
-          <p class="section-copy">
-            Judges can say a lot faster to a live repo card than to a verbal claim. This section fetches stars, issues,
-            languages, and recent commits from GitHub’s API.
-          </p>
-        </div>
-
-        <div class="panel workspace">
-          <form class="workspace-form compact-form" id="repoForm">
-            <label class="field grow">
-              <span class="field-label">GitHub repository URL</span>
-              <input class="input" id="repoUrlInput" name="repoUrl" placeholder="https://github.com/owner/repository" type="url" />
-            </label>
-            <div class="form-actions inline">
-              <button class="button primary" type="submit" id="repoSubmit">Fetch repo pulse</button>
-              <p class="inline-note" id="repoStatus">GitHub works with public repositories out of the box.</p>
+        <article class="studio-panel panel" id="submission-kit">
+          <div class="studio-head">
+            <div class="section-heading">
+              <p class="eyebrow accent">Submission kit</p>
+              <h2 class="section-title">Convert the concept into a demo script, resume bullet, and polished submission language.</h2>
+              <p class="section-copy">
+                This is the proof layer from the presentation: the project needs a product story, not just code.
+              </p>
             </div>
-          </form>
-
-          <div class="result-shell" id="repoResult">
-            <div class="placeholder-card">
-              <p class="placeholder-kicker">Live GitHub data</p>
-              <h3>Paste your repo URL and the proof board will populate.</h3>
-              <p>Great for screenshots, demos, and showing momentum without narrating every commit yourself.</p>
+            <div class="studio-meta" aria-label="Submission kit capabilities">
+              <span class="mini-pill">Demo beats</span>
+              <span class="mini-pill">Resume bullet</span>
+              <span class="mini-pill">Judge pitch</span>
             </div>
           </div>
-        </div>
+
+          <div class="studio-grid">
+            <div class="workspace-surface">
+              <form class="workspace-form" id="kitForm">
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Product name</span>
+                    <input class="input" id="kitProductName" name="productName" type="text" value="Codex Live Lab" />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Audience</span>
+                    <input class="input" id="kitAudience" name="audience" type="text" value="students and early creators who need a demoable project story fast" />
+                  </label>
+                </div>
+
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Transformation</span>
+                    <textarea class="textarea" id="kitTransformation" name="transformation" rows="4">Turn a rough challenge idea into a product concept, a live demo plan, and a submission-ready narrative.</textarea>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Standout proof point</span>
+                    <textarea class="textarea" id="kitStandoutFeature" name="standoutFeature" rows="4">The site uses OpenAI for ideation and GitHub for live implementation proof in the same experience.</textarea>
+                  </label>
+                </div>
+
+                <div class="field-grid two-up">
+                  <label class="field">
+                    <span class="field-label">Repo URL</span>
+                    <input class="input" id="kitRepoUrl" name="repoUrl" placeholder="https://github.com/yourname/your-repo" type="url" />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Deployment URL</span>
+                    <input class="input" name="deploymentUrl" placeholder="https://your-live-site.vercel.app" type="url" />
+                  </label>
+                </div>
+
+                <label class="field">
+                  <span class="field-label">Proof you want judges to remember</span>
+                  <input class="input" name="proofPoint" type="text" value="I shipped a polished live site with real API integrations and a clear student-facing use case." />
+                </label>
+
+                <div class="form-actions">
+                  <button class="button primary" type="submit" id="kitSubmit">Generate submission kit</button>
+                  <p class="inline-note" id="kitStatus">Use this after the concept feels right or after you have a repo link.</p>
+                </div>
+              </form>
+            </div>
+
+            <div class="workspace-surface">
+              <div class="result-shell" id="kitResult">
+                <div class="placeholder-card">
+                  <p class="placeholder-kicker">Story package</p>
+                  <h3>Your pitch, demo beats, and resume bullet will show up here.</h3>
+                  <p>Once the idea lab generates a concept, those details will automatically prefill this form.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="studio-panel panel" id="repo-pulse">
+          <div class="studio-head">
+            <div class="section-heading">
+              <p class="eyebrow accent">Repo pulse</p>
+              <h2 class="section-title">Pull live GitHub signals so the project story includes real shipping evidence.</h2>
+              <p class="section-copy">
+                Judges can say yes a lot faster to a live repo card than to a verbal claim. This section fetches stars,
+                issues, languages, and recent commits from GitHub's API.
+              </p>
+            </div>
+            <div class="studio-meta" aria-label="Repo pulse capabilities">
+              <span class="mini-pill">GitHub</span>
+              <span class="mini-pill">Stars and commits</span>
+              <span class="mini-pill">Screenshot ready</span>
+            </div>
+          </div>
+
+          <div class="studio-grid">
+            <div class="workspace-surface">
+              <form class="workspace-form compact-form" id="repoForm">
+                <label class="field grow">
+                  <span class="field-label">GitHub repository URL</span>
+                  <input class="input" id="repoUrlInput" name="repoUrl" placeholder="https://github.com/owner/repository" type="url" />
+                </label>
+                <div class="form-actions inline">
+                  <button class="button primary" type="submit" id="repoSubmit">Fetch repo pulse</button>
+                  <p class="inline-note" id="repoStatus">GitHub works with public repositories out of the box.</p>
+                </div>
+              </form>
+            </div>
+
+            <div class="workspace-surface">
+              <div class="result-shell" id="repoResult">
+                <div class="placeholder-card">
+                  <p class="placeholder-kicker">Live GitHub data</p>
+                  <h3>Paste your repo URL and the proof board will populate.</h3>
+                  <p>Great for screenshots, demos, and showing momentum without narrating every commit yourself.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
       </section>
 
       <section class="section" id="launch-checklist">
-        <div class="section-heading">
-          <p class="eyebrow accent">Launch checklist</p>
-          <h2 class="section-title">Keep the scope tight enough that the demo survives contact with reality.</h2>
-        </div>
-        <div class="panel checklist-panel">
-          <div class="checklist-copy">
-            <p>
-              The original presentation emphasized seeded data, one polished loop, and proof captured while the app is
-              stable. This checklist keeps the site honest about that.
-            </p>
+        <article class="studio-panel panel checklist-shell">
+          <div class="studio-head">
+            <div class="section-heading">
+              <p class="eyebrow accent">Launch checklist</p>
+              <h2 class="section-title">Keep the scope tight enough that the demo survives contact with reality.</h2>
+              <p class="section-copy">
+                The original presentation emphasized seeded data, one polished loop, and proof captured while the app
+                is stable. This checklist keeps the site honest about that.
+              </p>
+            </div>
+            <div class="studio-meta" aria-label="Launch checklist focus">
+              <span class="mini-pill">Stable flow</span>
+              <span class="mini-pill">Screenshot pass</span>
+              <span class="mini-pill">Final polish</span>
+            </div>
           </div>
-          <div class="checklist-list" id="checklistList"></div>
-        </div>
+
+          <div class="checklist-grid">
+            <div class="checklist-copy">
+              <p>
+                Use this as the last pass before you submit: working APIs, a current repo, rehearsed demo beats, and
+                captured proof while the app is behaving.
+              </p>
+            </div>
+            <div class="checklist-list" id="checklistList"></div>
+          </div>
+        </article>
       </section>
     </main>
   </div>
@@ -773,7 +846,7 @@ function renderRepoResult(data: RepoResponse): void {
                           <strong>${escapeHtml(commit.message)}</strong>
                           <a class="inline-link" href="${safeUrl(commit.url)}" rel="noreferrer" target="_blank">${escapeHtml(commit.sha)}</a>
                         </div>
-                        <p>${escapeHtml(commit.author)} • ${escapeHtml(formatDate(commit.date))}</p>
+                        <p>${escapeHtml(commit.author)} - ${escapeHtml(formatDate(commit.date))}</p>
                       </div>
                     `,
                   )
@@ -838,7 +911,7 @@ async function loadHealth(): Promise<void> {
     );
     setStatusPill(
       modelStatusPill,
-      `Model: ${health.model}${health.githubTokenConfigured ? " • GitHub token ready" : " • GitHub public mode"}`,
+      `Model: ${health.model}${health.githubTokenConfigured ? " - GitHub token ready" : " - GitHub public mode"}`,
       "soft",
     );
   } catch (error) {
