@@ -1,8 +1,7 @@
 import express from "express";
 
+import { createBlueprint, createSubmissionKit } from "./ai";
 import {
-  createBlueprint,
-  createSubmissionKit,
   getHealthPayload,
   getRepoPulse,
 } from "./core";

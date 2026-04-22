@@ -1,4 +1,4 @@
-import { createSubmissionKit } from "../server/core";
+import { createSubmissionKit } from "../server/ai";
 
 type ApiRequest = {
   body?: unknown;

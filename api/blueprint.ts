@@ -1,4 +1,4 @@
-import { createBlueprint } from "../server/core";
+import { createBlueprint } from "../server/ai";
 
 type ApiRequest = {
   body?: unknown;
