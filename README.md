@@ -15,6 +15,22 @@
 
 The Vite client runs on `http://localhost:5173` and proxies API requests to the Express server on `http://localhost:8787`.
 
+## Vercel
+
+This project is set up for Vercel with:
+
+- static frontend build output from Vite
+- serverless API routes under `api/**`
+
+Required Vercel environment variable:
+
+- `OPENAI_API_KEY`
+
+Optional Vercel environment variables:
+
+- `OPENAI_MODEL`
+- `GITHUB_TOKEN`
+
 ## Build and serve
 
 - `npm run build`
