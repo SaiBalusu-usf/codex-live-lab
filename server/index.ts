@@ -20,7 +20,7 @@ if (existsSync(distPath) && existsSync(indexPath)) {
   });
 }
 
-app.listen(port, () => {
+app.listen(port, '127.0.0.1', () => {
   // Intentional server log for local dev visibility.
   console.log(`Codex Live Lab server listening on http://localhost:${port}`);
 });

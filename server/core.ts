@@ -8,6 +8,7 @@ export const repoQuerySchema = z.object({
 });
 
 type GitHubRepo = {
+  private: boolean;
   default_branch: string;
   description: string | null;
   forks_count: number;
@@ -34,27 +35,17 @@ type GitHubCommit = {
 
 function normalizeRepoInput(input: string): { owner: string; repo: string } {
   const trimmed = input.trim().replace(/\/+$/, "");
-
-  try {
-    const url = new URL(trimmed.includes("://") ? trimmed : `https://${trimmed}`);
-    const parts = url.pathname.split("/").filter(Boolean);
-
-    if (url.hostname !== "github.com" || parts.length < 2) {
-      throw new Error();
+  let value = trimmed;
+  if (trimmed.startsWith('https://') || trimmed.startsWith('github.com/')) {
+    const url = new URL(trimmed.startsWith('https://') ? trimmed : `https://${trimmed}`);
+    if (url.hostname !== 'github.com' || url.username || url.password || url.port || url.search || url.hash) {
+      throw new Error('Invalid GitHub repository URL.');
     }
-
-    return {
-      owner: parts[0],
-      repo: parts[1].replace(/\.git$/i, ""),
-    };
-  } catch {
-    const parts = trimmed.split("/").filter(Boolean);
-    if (parts.length >= 2) {
-      return {
-        owner: parts[parts.length - 2],
-        repo: parts[parts.length - 1].replace(/\.git$/i, ""),
-      };
-    }
+    value = url.pathname.slice(1);
+  }
+  const match = /^([A-Za-z0-9][A-Za-z0-9-]{0,38})\/([A-Za-z0-9_.-]{1,100})$/.exec(value);
+  if (match && !['.', '..'].includes(match[2])) {
+    return { owner: match[1], repo: match[2].replace(/\.git$/i, '') };
   }
 
   throw new Error("Enter a valid GitHub repository URL like https://github.com/owner/repo.");
@@ -62,6 +53,8 @@ function normalizeRepoInput(input: string): { owner: string; repo: string } {
 
 async function fetchGitHub<T>(path: string): Promise<T> {
   const response = await fetch(`https://api.github.com${path}`, {
+    redirect: 'error',
+    signal: AbortSignal.timeout(15000),
     headers: {
       Accept: "application/vnd.github+json",
       ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
@@ -92,8 +85,9 @@ export async function getRepoPulse(rawUrl: unknown) {
   });
   const { owner, repo } = normalizeRepoInput(query.url);
 
-  const [repoData, languages, commits] = await Promise.all([
-    fetchGitHub<GitHubRepo>(`/repos/${owner}/${repo}`),
+  const repoData = await fetchGitHub<GitHubRepo>(`/repos/${owner}/${repo}`);
+  if (repoData.private !== false) throw new Error('Only public repositories can be displayed.');
+  const [languages, commits] = await Promise.all([
     fetchGitHub<Record<string, number>>(`/repos/${owner}/${repo}/languages`),
     fetchGitHub<GitHubCommit[]>(`/repos/${owner}/${repo}/commits?per_page=5`),
   ]);
