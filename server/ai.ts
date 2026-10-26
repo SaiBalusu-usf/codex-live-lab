@@ -4,7 +4,7 @@ import { z } from "zod";
 import { openaiModel } from "./core.js";
 
 const openai = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY, maxRetries: 0, timeout: 30000 })
   : null;
 
 const blueprintRequestSchema = z.object({
@@ -93,6 +93,7 @@ async function parseStructuredOutput<TSchema extends z.ZodTypeAny>(
   const { zodTextFormat } = await import("openai/helpers/zod");
 
   const response = await client.responses.parse({
+    max_output_tokens: 4096,
     model: openaiModel,
     input: [
       {

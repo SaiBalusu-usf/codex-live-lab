@@ -1,8 +1,9 @@
+import { requireAppAccess, type AccessRequest } from '../../server/access.js';
 import { getRepoPulse } from "../../server/core.js";
 
 type QueryValue = string | string[] | undefined;
 
-type ApiRequest = {
+type ApiRequest = AccessRequest & {
   method?: string;
   query?: Record<string, QueryValue>;
 };
@@ -22,6 +23,7 @@ function readQueryUrl(value: QueryValue): string {
 }
 
 export default async function handler(request: ApiRequest, response: ApiResponse) {
+  if (!requireAppAccess(request, response)) return;
   if (request.method !== "GET") {
     response.setHeader("Allow", "GET");
     response.status(405).json({ error: "Method not allowed." });
@@ -31,9 +33,9 @@ export default async function handler(request: ApiRequest, response: ApiResponse
   try {
     const repoPulse = await getRepoPulse(readQueryUrl(request.query?.url));
     response.status(200).json(repoPulse);
-  } catch (error) {
+  } catch {
     response.status(400).json({
-      error: error instanceof Error ? error.message : "GitHub data could not be loaded.",
+      error: "GitHub data could not be loaded.",
     });
   }
 }
